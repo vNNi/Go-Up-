@@ -1,6 +1,8 @@
 package main
 
 import "fmt"
+import "os"
+import "net/http"
 
 func main() {
 	welcome()
@@ -14,6 +16,7 @@ func main() {
 		exit()
 	default:
 		fmt.Println("Command not found")
+		os.Exit(-1)
 	}
 }
 func welcome() {
@@ -37,7 +40,11 @@ func showLogs() {
 }
 func monitoring() {
 	fmt.Println("Monitoring...")
+	site := "https://www.alura.com.br/"
+	resp, _ := http.Get(site)
+	fmt.Println(resp.Status)
 }
 func exit() {
 	fmt.Println("Exit..")
+	os.Exit(0)
 }
