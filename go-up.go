@@ -35,21 +35,44 @@ func welcome() {
 }
 func action() int {
 	fmt.Println("--------------------------------------------------")
-	fmt.Println("1- Begin Monitoring")
+	fmt.Println("1- Begin Monitoring - CTRL + C to stop")
 	fmt.Println("2- Show Logs")
 	fmt.Println("3- Exit program")
 	var action int
 	fmt.Scan(&action)
 	return action
 }
-func showLogs() {
-	fmt.Println("Show logs")
-}
 func monitoring() {
-	fmt.Println("Monitoring...")
-	site := "https://www.alura.com.br/"
-	resp, _ := http.Get(site)
-	fmt.Println(resp.Status)
+	for {
+		fmt.Println("Monitoring...")
+		file, err := os.Open("./sites.txt")
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer file.Close()
+
+		scanner := bufio.NewScanner(file)
+
+		// each line is a url to verify
+
+		for scanner.Scan() {
+			site := scanner.Text()
+			resp, _ := http.Get(site)
+			red := color.FgRed.Render
+			green := color.FgGreen.Render
+			if resp.StatusCode == 200 {
+				fmt.Println(site, green(resp.Status))
+				writeLog(site, resp.Status)
+			} else {
+				fmt.Println(site, red(resp.Status))
+				writeLog(site, resp.Status)
+			}
+		}
+		file.Close()
+		fmt.Println("-------------------")
+		fmt.Println("Will verify again....")
+		time.Sleep(2 * time.Second)
+	}
 }
 func exit() {
 	fmt.Println("Exit..")
