@@ -79,6 +79,16 @@ func exit() {
 	os.Exit(0)
 }
 
+func writeLog(site string, status string) {
+	file, err := os.OpenFile("logs.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+	t := time.Now()
+	file.WriteString("Site: " + site + " - " + status + "; " + t.Format("2006-01-02 15:04:05") + "\n")
+	file.Close()
+}
 func showLogs() {
 	if _, err := os.Stat("logs.txt"); os.IsNotExist(err) {
 		fmt.Println("No logs to show")
