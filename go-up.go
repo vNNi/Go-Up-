@@ -1,8 +1,15 @@
 package main
 
 import "gopkg.in/gookit/color.v1"
-import "os"
-import "net/http"
+
+import (
+	"bufio"
+	"fmt"
+	"log"
+	"net/http"
+	"os"
+	"time"
+)
 
 func main() {
 	welcome()
