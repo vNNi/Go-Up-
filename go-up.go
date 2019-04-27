@@ -1,6 +1,6 @@
 package main
 
-import "fmt"
+import "gopkg.in/gookit/color.v1"
 import "os"
 import "net/http"
 
