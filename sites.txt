@@ -1,0 +1,4 @@
+https://golang.org/pkg/bufio/#Reader.ReadLine
+https://www.youtube.com/watch?v=CR7QizUf6Jo
+https://www.callicoder.com/golang-control-flow/
+http://random-status-code.herokuapp.com/
