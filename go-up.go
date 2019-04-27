@@ -78,3 +78,22 @@ func exit() {
 	fmt.Println("Exit..")
 	os.Exit(0)
 }
+
+func showLogs() {
+	if _, err := os.Stat("logs.txt"); os.IsNotExist(err) {
+		fmt.Println("No logs to show")
+		os.Exit(0)
+	}
+	file, err := os.Open("logs.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(file)
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+
+	for scanner.Scan() {
+		fmt.Println(scanner.Text())
+	}
+}
